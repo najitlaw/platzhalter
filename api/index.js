@@ -36,6 +36,6 @@ export const draw = (canvas, w, h, c, ct, t) => {
     context.font = `bold ${fontSize}px Inter`;
     context.textAlign = "center";
     context.fillStyle = `#${ct}`;
-    context.fillText(textContent, 0 + w / 2, h + fontSize / 2 - h / 2);
+    context.fillText(textContent, w / 2, (h + fontSize) / 2);
   }
 };
