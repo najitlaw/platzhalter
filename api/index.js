@@ -11,7 +11,7 @@ export default (req, res) => {
   const context = canvas.getContext("2d");
 
   const grd = context.createLinearGradient(0, 0, width, 0);
-  grd.addColorStop(0, "red");
+  grd.addColorStop(0, bgColor);
   grd.addColorStop(1, "white");
 
   // context.fillStyle = `#${bgColor}`;
@@ -20,7 +20,7 @@ export default (req, res) => {
 
   const text = req.query.t || "platzhalter";
 
-  context.font = "bold 21pt Menlo";
+  context.font = "bold 21pt Arial";
   context.textAlign = "center";
   context.fillStyle = `#${fgColor}`;
   context.fillText(text, 0 + width / 2, height - height / 2);
