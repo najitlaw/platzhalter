@@ -1,53 +1,41 @@
 import { createCanvas, registerFont } from "canvas";
 import path from "path";
 
-registerFont(path.resolve("./public/Inter-Bold.ttf"), {
-  family: "Inter",
-});
-
 export default (req, res) => {
-  const width = parseInt(req.query.w) <= 10000 ? parseInt(req.query.w) : 300;
-  const height = parseInt(req.query.h) <= 10000 ? parseInt(req.query.h) : 300;
+  registerFont(path.resolve("./public/Inter-Bold.ttf"), {
+    family: "Inter",
+  });
 
-  const canvas = getCanvas(
-    width,
-    height,
-    req.query.c,
-    req.query.ct,
-    req.query.t
-  );
+  const w = parseInt(req.query.w) <= 10000 ? parseInt(req.query.w) : 300;
+  const h = parseInt(req.query.h) <= 10000 ? parseInt(req.query.h) : 300;
+
+  const canvas = getCanvas(w, h, req.query.c, req.query.ct, req.query.t);
 
   res.setHeader("Content-Type", "image/png");
   res.status(200).send(canvas.toBuffer("image/png"));
 };
 
-export const getCanvas = (
-  width = 300,
-  height = 300,
-  backgroundColor = "fff",
-  textColor = "000",
-  text
-) => {
-  const canvas = createCanvas(width, height);
+export const getCanvas = (w = 300, h = 300, c = "fff", ct = "000", t) => {
+  const canvas = createCanvas(w, h);
+  draw(canvas, w, h, c, ct, t);
+
+  return canvas;
+};
+
+export const draw = (canvas, w, h, c, ct, t) => {
   const context = canvas.getContext("2d");
 
-  context.fillStyle = `#${backgroundColor}`;
-  context.fillRect(0, 0, width, height);
+  context.fillStyle = `#${c}`;
+  context.fillRect(0, 0, w, h);
 
-  const textContent = text || `${width} x ${height}`;
+  const textContent = t || `${w} x ${h}`;
 
-  const fontSize = width / 12;
+  const fontSize = w / 12;
 
   if (fontSize >= 10) {
     context.font = `bold ${fontSize}px Inter`;
     context.textAlign = "center";
-    context.fillStyle = `#${textColor}`;
-    context.fillText(
-      textContent,
-      0 + width / 2,
-      height + fontSize / 2 - height / 2
-    );
+    context.fillStyle = `#${ct}`;
+    context.fillText(textContent, 0 + w / 2, h + fontSize / 2 - h / 2);
   }
-
-  return canvas;
 };

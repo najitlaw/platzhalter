@@ -1,6 +1,6 @@
 import "../styles/globals.css";
 
-function MyApp({ Component, pageProps }) {
+function Platzhalter({ Component, pageProps }) {
   return (
     <div className="h-full bg-gray-900">
       <Component {...pageProps} />
@@ -8,4 +8,4 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-export default MyApp;
+export default Platzhalter;
