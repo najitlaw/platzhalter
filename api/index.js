@@ -10,7 +10,12 @@ export default (req, res) => {
   const canvas = createCanvas(width, height);
   const context = canvas.getContext("2d");
 
-  context.fillStyle = `#${bgColor}`;
+  const grd = context.createLinearGradient(0, 0, width, 0);
+  grd.addColorStop(0, "red");
+  grd.addColorStop(1, "white");
+
+  // context.fillStyle = `#${bgColor}`;
+  context.fillStyle = grd;
   context.fillRect(0, 0, width, height);
 
   const text = req.query.t || "platzhalter";
