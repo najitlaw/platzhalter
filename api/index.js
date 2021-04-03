@@ -11,7 +11,7 @@ export default (req, res) => {
   const context = canvas.getContext("2d");
 
   const grd = context.createLinearGradient(0, 0, width, 0);
-  grd.addColorStop(0, bgColor);
+  grd.addColorStop(0, `#${bgColor}`);
   grd.addColorStop(1, "white");
 
   // context.fillStyle = `#${bgColor}`;
