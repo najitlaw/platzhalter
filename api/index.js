@@ -9,25 +9,45 @@ export default (req, res) => {
   const width = parseInt(req.query.w) <= 10000 ? parseInt(req.query.w) : 300;
   const height = parseInt(req.query.h) <= 10000 ? parseInt(req.query.h) : 300;
 
-  const bgColor = req.query.c || "fff";
-  const fgColor = req.query.ct || "000";
+  const canvas = getCanvas(
+    width,
+    height,
+    req.query.c,
+    req.query.ct,
+    req.query.t
+  );
 
+  res.setHeader("Content-Type", "image/png");
+  res.status(200).send(canvas.toBuffer("image/png"));
+};
+
+const getCanvas = (
+  width = 300,
+  height = 300,
+  backgroundColor = "fff",
+  textColor = "000",
+  text
+) => {
   const canvas = createCanvas(width, height);
   const context = canvas.getContext("2d");
 
-  context.fillStyle = `#${bgColor}`;
+  context.fillStyle = `#${backgroundColor}`;
+  context.fillRect(0, 0, width, height);
 
-  const text = req.query.t || `${width} x ${height}`;
+  const textContent = text || `${width} x ${height}`;
 
   const fontSize = width / 12;
 
   if (fontSize >= 10) {
     context.font = `bold ${fontSize}px Inter`;
     context.textAlign = "center";
-    context.fillStyle = `#${fgColor}`;
-    context.fillText(text, 0 + width / 2, height + fontSize / 2 - height / 2);
+    context.fillStyle = `#${textColor}`;
+    context.fillText(
+      textContent,
+      0 + width / 2,
+      height + fontSize / 2 - height / 2
+    );
   }
 
-  res.setHeader("Content-Type", "image/png");
-  res.status(200).send(canvas.toBuffer("image/png"));
+  return canvas;
 };
