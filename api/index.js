@@ -6,8 +6,8 @@ registerFont(path.resolve("./public/Inter-Bold.ttf"), {
 });
 
 export default (req, res) => {
-  const width = parseInt(req.query.w) || 300;
-  const height = parseInt(req.query.h) || 300;
+  const width = parseInt(req.query.w) <= 10000 ? parseInt(req.query.w) : 300;
+  const height = parseInt(req.query.h) <= 10000 ? parseInt(req.query.h) : 300;
 
   const bgColor = req.query.c || "fff";
   const fgColor = req.query.ct || "000";
@@ -15,24 +15,19 @@ export default (req, res) => {
   const canvas = createCanvas(width, height);
   const context = canvas.getContext("2d");
 
-  const grd = context.createLinearGradient(0, 0, width, 0);
-  grd.addColorStop(0, `#${bgColor}`);
-  grd.addColorStop(1, "white");
+  context.fillStyle = `#${bgColor}`;
 
-  // context.fillStyle = `#${bgColor}`;
-  context.fillStyle = grd;
-  context.fillRect(0, 0, width, height);
+  const text = req.query.t || `${width} x ${height}`;
 
-  const text = req.query.t || "platzhalter";
+  const fontSize = width / 12;
 
-  context.font = "bold 21pt Inter";
-  context.textAlign = "center";
-  context.fillStyle = `#${fgColor}`;
-  context.fillText(text, 0 + width / 2, height - height / 2);
-
-  const buffer = canvas.toBuffer("image/png");
+  if (fontSize >= 10) {
+    context.font = `bold ${fontSize}px Inter`;
+    context.textAlign = "center";
+    context.fillStyle = `#${fgColor}`;
+    context.fillText(text, 0 + width / 2, height + fontSize / 2 - height / 2);
+  }
 
   res.setHeader("Content-Type", "image/png");
-
-  res.status(200).send(buffer);
+  res.status(200).send(canvas.toBuffer("image/png"));
 };
