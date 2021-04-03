@@ -1,4 +1,9 @@
-import { createCanvas } from "canvas";
+import { createCanvas, registerFont } from "canvas";
+import path from "path";
+
+registerFont(path.resolve("./public/Inter-Bold.ttf"), {
+  family: "Inter",
+});
 
 export default (req, res) => {
   const width = parseInt(req.query.w) || 300;
@@ -20,7 +25,7 @@ export default (req, res) => {
 
   const text = req.query.t || "platzhalter";
 
-  context.font = "bold 21pt Arial";
+  context.font = "bold 21pt Inter";
   context.textAlign = "center";
   context.fillStyle = `#${fgColor}`;
   context.fillText(text, 0 + width / 2, height - height / 2);
