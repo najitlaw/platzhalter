@@ -9,8 +9,11 @@
     "now-build": "yum install libuuid-devel libmount-devel && cp /lib64/{libuuid,libmount,libblkid}.so.1 node_modules/canvas/build/Release/ && yarn run build"
   },
   "dependencies": {
+    "@tailwindcss/forms": "^0.3.2",
+    "autoprefixer": "^10.2.5",
     "canvas": "^2.7.0",
     "next": "10.1.3",
+    "postcss": "^8.2.9",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "vercel": "^21.3.3"

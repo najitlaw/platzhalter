@@ -21,7 +21,7 @@ export default (req, res) => {
   res.status(200).send(canvas.toBuffer("image/png"));
 };
 
-const getCanvas = (
+export const getCanvas = (
   width = 300,
   height = 300,
   backgroundColor = "fff",
